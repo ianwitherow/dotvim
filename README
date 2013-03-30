@@ -1,0 +1,8 @@
+Installation
+
+	git clone https://github.com/ianwitherow/dotvim.git
+
+
+Create symlink
+	
+	ln -s c:\users\[name]\.vim\.vimrc c:\users\[name]\.vimrc
