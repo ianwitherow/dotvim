@@ -37,8 +37,10 @@ autocmd GUIEnter * set visualbell t_vb=
 let mapleader=','
 
 set ai "autoindent
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+
 set nu "Show line numbers
 
 set ignorecase "ignore case when searching
