@@ -51,7 +51,7 @@ au GUIEnter * simalt ~x
 
 "set copyindent
 
-set guifont=Consolas:h11
+set guifont=Consolas:h10
 
 color codeschool
 
