@@ -104,6 +104,9 @@ nnoremap <leader>j      :m+<CR>==
 nnoremap <leader><Up>   :m-2<CR>==
 nnoremap <leader><Down> :m+<CR>==
 
+"Remove ^M characters visual studio likes to make
+nnoremap <leader>dm		:%s/\r\(\n\)/\1/g<CR><C-o>
+
 
 " move the word under the cursor left and right
 nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
