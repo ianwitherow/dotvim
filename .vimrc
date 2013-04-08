@@ -79,10 +79,8 @@ map <S-Enter> O<Esc>
 " tab navigation like firefox
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
 
 "opening definitions
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
