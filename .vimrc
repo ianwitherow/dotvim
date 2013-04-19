@@ -1,3 +1,8 @@
+" Use pathogen to load plugins from bundle directory
+filetype off
+call pathogen#incubate()
+call pathogen#helptags()
+
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
@@ -123,6 +128,14 @@ vnoremap <Leader>P "*P
 
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
+
+
+"Quick file type changing
+nnoremap <leader>ftj :set ft=javascript<CR>
+nnoremap <leader>fth :set ft=html<CR>
+nnoremap <leader>ftc :set ft=css<CR>
+nnoremap <leader>ftx :set ft=xml<CR>
+nnoremap <leader>fts :set ft=sql<CR>
 
 "turn off ~ file backup
 set nobackup
