@@ -137,12 +137,10 @@ nnoremap <leader>ftc :set ft=css<CR>
 nnoremap <leader>ftx :set ft=xml<CR>
 nnoremap <leader>fts :set ft=sql<CR>
 
+
 "turn off ~ file backup
 set nobackup
 
-"Apply changes after saving
-"if has("autocmd")
-	autocmd! BufWritePost _vimrc source $MYVIMRC
+autocmd! BufWritePost _vimrc source $MYVIMRC
 
-"endif
-
+nnoremap <leader>cd cd ~\Documents\Dropbox\WebDev\ -\ SourceOT\ -\ MD5\
