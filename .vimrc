@@ -37,7 +37,7 @@ au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
 
 "turn off stupid bell sounds
 set noerrorbells
-set novisualbell
+set visualbell
 set t_vb=
 set tm=500
 
