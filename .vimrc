@@ -1,3 +1,8 @@
+" Use pathogen to load plugins from bundle directory
+filetype off
+call pathogen#incubate()
+call pathogen#helptags()
+
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
@@ -31,8 +36,10 @@ source $VIMRUNTIME/vimrc_example.vim
 au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
 
 "turn off stupid bell sounds
-set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
 
 let mapleader=','
 
@@ -49,7 +56,9 @@ set smartcase "override ignorecase when pattern contains a capital letter
 "Start in full screen
 set lines=999
 set columns=999
+
 au GUIEnter * simalt ~x
+map <leader>F :simalt ~x<CR>
 
 "set copyindent
 
@@ -79,10 +88,11 @@ map <S-Enter> O<Esc>
 " tab navigation like firefox
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
+
+map <leader>te :tabedit 
+map <leader>tm :tabmove 
 
 "opening definitions
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -126,12 +136,19 @@ vnoremap <Leader>P "*P
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
 
+
+"Quick file type changing
+nnoremap <leader>ftj :set ft=javascript<CR>
+nnoremap <leader>fth :set ft=html<CR>
+nnoremap <leader>ftc :set ft=css<CR>
+nnoremap <leader>ftx :set ft=xml<CR>
+nnoremap <leader>fts :set ft=sql<CR>
+
+
 "turn off ~ file backup
 set nobackup
 
-"Apply changes after saving
-"if has("autocmd")
-	autocmd! BufWritePost _vimrc source $MYVIMRC
+autocmd! BufWritePost .vimrc source $MYVIMRC
 
-"endif
+nnoremap <leader>cd cd ~\Documents\Dropbox\WebDev\ -\ SourceOT\ -\ MD5\
 

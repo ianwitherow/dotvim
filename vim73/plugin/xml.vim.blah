@@ -1250,55 +1250,55 @@ au BufNewFile *
 		 \ call NewFileXML() |
 	 \ endif
 augroup END
-if !exists("g:did_xml_menu")
-	let g:did_xml_menu = 1
-	:1011 vmenu <script> &Xml.BlockTag\ multi<Tab>V  <Esc>:call <SID>BlockTag(1)<Cr>
-	vmenu <script> Xml.BlockTag\ inline<Tab>v  <Esc>:call <SID>BlockTag(0)<CR>
-	vmenu <script> Xml.Insert\ listitem<Tab>l <Esc>:call <SID>vlistitem()<CR>
-	vmenu <script> Xml.Comment<Tab>< <Esc>:call <SID>BlockWith('<!--','-->')<Cr>
-	vmenu <script> Xml.Comment\ With\ CData<Tab>c <Esc>:call <SID>BlockWith('<![CDATA[',']]>')<Cr>
-	nmenu <script> Xml.Comment\ Tag<Tab>= <Esc>:call <SID>CommentTag()<Cr>
-	imenu <script> Xml.Comment\ Tag<Tab>= <Esc>:call <SID>CommentTag()<Cr>
-	nmenu <script> Xml.Change<Tab>c  :call <SID>Change()<CR>
-	imenu <script> Xml.Change<Tab>c  <C-C>:call <SID>Change()<CR>
-	nmenu <script> Xml.Change\ Whole\ Tag<Tab>C  :call <SID>ChangeWholeTag()<CR>
-	imenu <script> Xml.Change\ Whole\ Tag<Tab>C  <C-C>:call <SID>ChangeWholeTag()<CR>
-	nmenu <script> Xml.Delete\ Comment<Tab>]  :call <SID>DelComment()<CR>
-	imenu <script> Xml.Delete\ Comment<Tab>]  <C-C>:call <SID>DelComment()<CR>
-	nmenu <script> Xml.Delete\ Comment\ Section<Tab>}  :call <SID>DelCommentSection()<CR>
-	imenu <script> Xml.Delete\ Comment\ Section<Tab>}  <C-C>:call <SID>DelCommentSection()<CR>
-	nmenu <script> Xml.Delete\ CData<Tab>[  :call <SID>DelCData()<CR>
-	imenu <script> Xml.Delete\ CData<Tab>[  <C-C>:call <SID>DelCData()<CR>
-	nmenu <script> Xml.Delete\ CData\ Section<Tab>[  :call <SID>DelCDataSection()<CR>
-	imenu <script> Xml.Delete\ CData\ Section<Tab>[  <C-C>:call <SID>DelCDataSection()<CR>
-	nmenu <script> Xml.Delete\ Tag<Tab>d  :call <SID>Delete()<CR>
-	imenu <script> Xml.Delete\ Tag<Tab>d  <C-C>:call <SID>Delete()<CR>
-	nmenu <script> Xml.Delete\ Section<Tab>D  :call <SID>DeleteSection()<CR>
-	imenu <script> Xml.Delete\ Section<Tab>D  <C-C>:call <SID>DeleteSection()<CR>
-	nmenu <script> Xml.End\ Tag<Tab>e  :call <SID>EndTag()<CR>
-	imenu <script> Xml.End\ Tag<Tab>e  <C-C>:call <SID>EndTag()<CR>
-	nmenu <script> Xml.Fold\ Comment  :?<!--?,/-->/fo<CR>
-	nmenu <script> Xml.Fold\ CData  :?<!\[CDATA\[?,/\]\]>/fo<CR>
-	nmenu <script> Xml.Fold\ Processing\ instruc  :?<\?[a-zA-Z]*?,/?>/fo<CR>
-	nmenu <script> Xml.Fold\ Tag<Tab>f  :call <SID>FoldTag()<CR>
-	nmenu <script> Xml.Fold\ All\ Tags<Tab>F  :call <SID>FoldTagAll()<CR>
-	nmenu <script> Xml.Format\ Tags<Tab>g  :call <SID>FormatTag()<CR>
-	nmenu <script> Xml.Format\ All\ Tags<Tab>G  :call <SID>FormatTagAll()<CR>
-	nmenu <script> Xml.Join<Tab>j  :call <SID>Join()<CR>
-	imenu <script> Xml.Join<Tab>j  <C-C>:call <SID>Join()<CR>
-	nmenu <script> Xml.Open\ After\ Tag<Tab>O  :call <SID>AfterTag()<CR>
-	imenu <script> Xml.Open\ After\ Tag<Tab>O  <C-C>:call <SID>AfterTag()<CR>
-	nmenu <script> Xml.open\ Before\ Tag<Tab>o  :call <SID>BeforeTag()<CR>
-	imenu <script> Xml.open\ Before\ Tag<Tab>o  <C-C>:call <SID>BeforeTag()<CR>
-	nmenu <script> Xml.Match<Tab>5  :call <SID>Matches()<CR>
-	imenu <script> Xml.Match<Tab>5  <C-C>:call <SID>Matches()<CR><C-\><C-G>
-	nmenu <script> Xml.Shift\ Left<Tab><  :call <SID>ShiftLeft()<CR>
-	imenu <script> Xml.Shift\ Left<Tab><  <C-C>:call <SID>ShiftLeft()<CR><C-\><C-G>
-	nmenu <script> Xml.Shift\ Right<Tab>>  :call <SID>ShiftRight()<CR>
-	imenu <script> Xml.Shift\ Right<Tab>>  <C-C>:call <SID>ShiftRight()<CR><C-\><C-G>
-	nmenu <script> Xml.Start\ Tag<Tab>s  :call <SID>StartTag()<CR>
-	imenu <script> Xml.Start\ Tag<Tab>s  <C-C>:call <SID>StartTag()<CR><C-\><C-G>
-en
+"if !exists("g:did_xml_menu")
+"	let g:did_xml_menu = 1
+"	:1011 vmenu <script> &Xml.BlockTag\ multi<Tab>V  <Esc>:call <SID>BlockTag(1)<Cr>
+"	vmenu <script> Xml.BlockTag\ inline<Tab>v  <Esc>:call <SID>BlockTag(0)<CR>
+"	vmenu <script> Xml.Insert\ listitem<Tab>l <Esc>:call <SID>vlistitem()<CR>
+"	vmenu <script> Xml.Comment<Tab>< <Esc>:call <SID>BlockWith('<!--','-->')<Cr>
+"	vmenu <script> Xml.Comment\ With\ CData<Tab>c <Esc>:call <SID>BlockWith('<![CDATA[',']]>')<Cr>
+"	nmenu <script> Xml.Comment\ Tag<Tab>= <Esc>:call <SID>CommentTag()<Cr>
+"	imenu <script> Xml.Comment\ Tag<Tab>= <Esc>:call <SID>CommentTag()<Cr>
+"	nmenu <script> Xml.Change<Tab>c  :call <SID>Change()<CR>
+"	imenu <script> Xml.Change<Tab>c  <C-C>:call <SID>Change()<CR>
+"	nmenu <script> Xml.Change\ Whole\ Tag<Tab>C  :call <SID>ChangeWholeTag()<CR>
+"	imenu <script> Xml.Change\ Whole\ Tag<Tab>C  <C-C>:call <SID>ChangeWholeTag()<CR>
+"	nmenu <script> Xml.Delete\ Comment<Tab>]  :call <SID>DelComment()<CR>
+"	imenu <script> Xml.Delete\ Comment<Tab>]  <C-C>:call <SID>DelComment()<CR>
+"	nmenu <script> Xml.Delete\ Comment\ Section<Tab>}  :call <SID>DelCommentSection()<CR>
+"	imenu <script> Xml.Delete\ Comment\ Section<Tab>}  <C-C>:call <SID>DelCommentSection()<CR>
+"	nmenu <script> Xml.Delete\ CData<Tab>[  :call <SID>DelCData()<CR>
+"	imenu <script> Xml.Delete\ CData<Tab>[  <C-C>:call <SID>DelCData()<CR>
+"	nmenu <script> Xml.Delete\ CData\ Section<Tab>[  :call <SID>DelCDataSection()<CR>
+"	imenu <script> Xml.Delete\ CData\ Section<Tab>[  <C-C>:call <SID>DelCDataSection()<CR>
+"	nmenu <script> Xml.Delete\ Tag<Tab>d  :call <SID>Delete()<CR>
+"	imenu <script> Xml.Delete\ Tag<Tab>d  <C-C>:call <SID>Delete()<CR>
+"	nmenu <script> Xml.Delete\ Section<Tab>D  :call <SID>DeleteSection()<CR>
+"	imenu <script> Xml.Delete\ Section<Tab>D  <C-C>:call <SID>DeleteSection()<CR>
+"	nmenu <script> Xml.End\ Tag<Tab>e  :call <SID>EndTag()<CR>
+"	imenu <script> Xml.End\ Tag<Tab>e  <C-C>:call <SID>EndTag()<CR>
+"	nmenu <script> Xml.Fold\ Comment  :?<!--?,/-->/fo<CR>
+"	nmenu <script> Xml.Fold\ CData  :?<!\[CDATA\[?,/\]\]>/fo<CR>
+"	nmenu <script> Xml.Fold\ Processing\ instruc  :?<\?[a-zA-Z]*?,/?>/fo<CR>
+"	nmenu <script> Xml.Fold\ Tag<Tab>f  :call <SID>FoldTag()<CR>
+"	nmenu <script> Xml.Fold\ All\ Tags<Tab>F  :call <SID>FoldTagAll()<CR>
+"	nmenu <script> Xml.Format\ Tags<Tab>g  :call <SID>FormatTag()<CR>
+"	nmenu <script> Xml.Format\ All\ Tags<Tab>G  :call <SID>FormatTagAll()<CR>
+"	nmenu <script> Xml.Join<Tab>j  :call <SID>Join()<CR>
+"	imenu <script> Xml.Join<Tab>j  <C-C>:call <SID>Join()<CR>
+"	nmenu <script> Xml.Open\ After\ Tag<Tab>O  :call <SID>AfterTag()<CR>
+"	imenu <script> Xml.Open\ After\ Tag<Tab>O  <C-C>:call <SID>AfterTag()<CR>
+"	nmenu <script> Xml.open\ Before\ Tag<Tab>o  :call <SID>BeforeTag()<CR>
+"	imenu <script> Xml.open\ Before\ Tag<Tab>o  <C-C>:call <SID>BeforeTag()<CR>
+"	nmenu <script> Xml.Match<Tab>5  :call <SID>Matches()<CR>
+"	imenu <script> Xml.Match<Tab>5  <C-C>:call <SID>Matches()<CR><C-\><C-G>
+"	nmenu <script> Xml.Shift\ Left<Tab><  :call <SID>ShiftLeft()<CR>
+"	imenu <script> Xml.Shift\ Left<Tab><  <C-C>:call <SID>ShiftLeft()<CR><C-\><C-G>
+"	nmenu <script> Xml.Shift\ Right<Tab>>  :call <SID>ShiftRight()<CR>
+"	imenu <script> Xml.Shift\ Right<Tab>>  <C-C>:call <SID>ShiftRight()<CR><C-\><C-G>
+"	nmenu <script> Xml.Start\ Tag<Tab>s  :call <SID>StartTag()<CR>
+"	imenu <script> Xml.Start\ Tag<Tab>s  <C-C>:call <SID>StartTag()<CR><C-\><C-G>
+"en
 
 " Section: Doc installation                                                {{{1
 " Function: s:XmlInstallDocumentation(full_name, revision)              {{{2

@@ -1073,6 +1073,9 @@ $VIMRUNTIME	starting.txt	/*$VIMRUNTIME*
 'vi'	options.txt	/*'vi'*
 'viewdir'	options.txt	/*'viewdir'*
 'viewoptions'	options.txt	/*'viewoptions'*
+'vim_tags_auto_generate'	vim-tags.txt	/*'vim_tags_auto_generate'*
+'vim_tags_gems_tags_command'	vim-tags.txt	/*'vim_tags_gems_tags_command'*
+'vim_tags_project_tags_command'	vim-tags.txt	/*'vim_tags_project_tags_command'*
 'viminfo'	options.txt	/*'viminfo'*
 'virtualedit'	options.txt	/*'virtualedit'*
 'visualbell'	options.txt	/*'visualbell'*
@@ -8536,6 +8539,12 @@ vim-modes	intro.txt	/*vim-modes*
 vim-modes-intro	intro.txt	/*vim-modes-intro*
 vim-multibyte	intro.txt	/*vim-multibyte*
 vim-script-intro	usr_41.txt	/*vim-script-intro*
+vim-tags	vim-tags.txt	/*vim-tags*
+vim-tags-about	vim-tags.txt	/*vim-tags-about*
+vim-tags-author-license	vim-tags.txt	/*vim-tags-author-license*
+vim-tags-configuration	vim-tags.txt	/*vim-tags-configuration*
+vim-tags-usage	vim-tags.txt	/*vim-tags-usage*
+vim-tags.txt	vim-tags.txt	/*vim-tags.txt*
 vim-variable	eval.txt	/*vim-variable*
 vim.vim	syntax.txt	/*vim.vim*
 vim7	version7.txt	/*vim7*
