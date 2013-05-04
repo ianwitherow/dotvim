@@ -37,7 +37,7 @@ au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
 
 "turn off stupid bell sounds
 set noerrorbells
-set visualbell
+set novisualbell
 set t_vb=
 set tm=500
 
@@ -50,6 +50,7 @@ set noexpandtab
 
 set nu "Show line numbers
 
+set incsearch "find results as you type
 set ignorecase "ignore case when searching
 set smartcase "override ignorecase when pattern contains a capital letter
 
@@ -60,12 +61,17 @@ set columns=999
 au GUIEnter * simalt ~x
 map <leader>F :simalt ~x<CR>
 
-"set copyindent
+"have 0 go to first nonblank character
+map 0 ^
 
 set guifont=Consolas:h10
 
 color codeschool
 
+"Persist undo
+set undodir=$TEMP
+set undofile
+set undolevels=5000
 
 runtime macros/matchit.vim
 autocmd BufNewFile,BufRead *.vb set ft=vbnet
@@ -93,6 +99,14 @@ inoremap <C-tab>   <Esc>:tabnext<CR>i
 
 map <leader>te :tabedit 
 map <leader>tm :tabmove 
+map <leader>tl :tablast<CR>
+map <leader>tf :tabfirst<CR>
+
+"Easy VIMRC editing
+map <leader>rc :tabedit $MYVIMRC<CR>
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<CR>
 
 "opening definitions
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -144,11 +158,16 @@ nnoremap <leader>ftc :set ft=css<CR>
 nnoremap <leader>ftx :set ft=xml<CR>
 nnoremap <leader>fts :set ft=sql<CR>
 
+"Break up html
+vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvato<Esc>
+
+"Split up HTML tag and put cursor inside
+imap <C-Enter> <Enter><Esc>O
 
 "turn off ~ file backup
 set nobackup
 
-autocmd! BufWritePost .vimrc source $MYVIMRC
-
 nnoremap <leader>cd cd ~\Documents\Dropbox\WebDev\ -\ SourceOT\ -\ MD5\
+
+autocmd! BufWritePost .vimrc source $MYVIMRC
 
