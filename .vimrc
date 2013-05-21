@@ -101,6 +101,7 @@ map <leader>te :tabedit
 map <leader>tm :tabmove 
 map <leader>tl :tablast<CR>
 map <leader>tf :tabfirst<CR>
+map <leader>tn :tabnew<CR>
 
 "Easy VIMRC editing
 map <leader>rc :tabedit $MYVIMRC<CR>
@@ -133,8 +134,8 @@ nnoremap <leader>dm		:%s/\r\(\n\)/\1/g<CR><C-o>
 
 
 " move the word under the cursor left and right
-nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
-nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
+nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>:noh<CR>
+nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>:noh<CR>
 
 " isolate a line
 nnoremap <leader><space><space> O<c-o>j<c-o>o<c-o>k<esc>
@@ -163,11 +164,19 @@ vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvat
 
 "Split up HTML tag and put cursor inside
 imap <C-Enter> <Enter><Esc>O
+imap <S-Enter> <Enter><Esc>O
+
+"HTML attribute text object
+omap aha :normal vaha<CR>
+vnoremap aha :<C-U>silent! normal! vf";<CR>
+
 
 "turn off ~ file backup
 set nobackup
 
-nnoremap <leader>cd cd ~\Documents\Dropbox\WebDev\ -\ SourceOT\ -\ MD5\
-
 autocmd! BufWritePost .vimrc source $MYVIMRC
+
+"Fix closetag
+let g:closetag_html_style=1
+au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
