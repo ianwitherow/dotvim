@@ -177,6 +177,6 @@ set nobackup
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 "Fix closetag
-let g:closetag_html_style=1
-au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
+"let g:closetag_html_style=1
+"au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
