@@ -3,35 +3,14 @@ filetype off
 call pathogen#incubate()
 call pathogen#helptags()
 
-set nocompatible
+set cm=blowfish
 source $VIMRUNTIME/vimrc_example.vim
-"source $VIMRUNTIME/mswin.vim
-"behave mswin
 
-"set diffexpr=MyDiff()
-"function MyDiff()
-"  let opt = '-a --binary '
-"  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-"  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-"  let arg1 = v:fname_in
-"  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-"  let arg2 = v:fname_new
-"  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-"  let arg3 = v:fname_out
-"  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-"  let eq = ''
-"  if $VIMRUNTIME =~ ' '
-"    if &sh =~ '\<cmd'
-"      let cmd = '""' . $VIMRUNTIME . '\diff"'
-"      let eq = '"'
-"    else
-"      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-"    endif
-"  else
-"    let cmd = $VIMRUNTIME . '\diff'
-"  endif
-"  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-"endfunction
+"Hide GUI things
+set guioptions-=m
+set guioptions-=T
+set guioptions-=L
+set guioptions-=r
 
 au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
 
@@ -41,40 +20,51 @@ set novisualbell
 set t_vb=
 set tm=500
 
+set hidden "Allow switching buffers even if it's not saved yet
+
 let mapleader=','
 
 set ai "autoindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=3
+set shiftwidth=3
 set noexpandtab
+
+set lazyredraw "When running macros, wait until it's done and then update the screen. way faster
 
 set nu "Show line numbers
 
 set incsearch "find results as you type
 set ignorecase "ignore case when searching
 set smartcase "override ignorecase when pattern contains a capital letter
+set noshowmatch
 
 "Start in full screen
-set lines=999
-set columns=999
-
 au GUIEnter * simalt ~x
-map <leader>F :simalt ~x<CR>
+"map <leader>F :simalt ~x<CR>
 
 "have 0 go to first nonblank character
-map 0 ^
+nmap 0 ^
 
-set guifont=Consolas:h10
+set guifont=consolas:h10
+"set guifont=Segoe\ UI\ Mono:h10
 
 color codeschool
 
 "Persist undo
-set undodir=$TEMP
+
+let undo_dir = $TEMP."\\vimundo"
+if !isdirectory(undo_dir)
+	silent execute "!mkdir ".undo_dir
+endif
+set undodir=$TEMP\vimundo "not sure how to use the variable I made here
 set undofile
 set undolevels=5000
 
 runtime macros/matchit.vim
-autocmd BufNewFile,BufRead *.vb set ft=vbnet
+"autocmd filetype vb set ft=vbnet "This makes vim super slow for some reason
+
+"Allows % to move between braces in inline css
+autocmd filetype html let b:match_debug=1
 
 "Treat all numbers as decimal
 set nrformats=
@@ -83,13 +73,16 @@ nmap <space> zz
 
 "Workaround because S doesn't work with indentation in visual studio
 "nmap S ddO
+"Visual studio backspace thing for the extension
+set backspace=indent,eol,start
 
 "Double ESC turns off seach highlighting
-nmap <ESC><ESC> :noh<CR>
+nmap <silent> <ESC><ESC> :noh<CR>
+nnoremap <silent> <c-l> :noh<cr><c-l>
 
 "New lines while staying in normal mode
-map <Enter> o<Esc>
-map <S-Enter> O<Esc>
+nmap <Enter> o<Esc>
+nmap <S-Enter> O<Esc>
 
 " tab navigation like firefox
 nnoremap <C-S-tab> :tabprevious<CR>
@@ -103,11 +96,21 @@ map <leader>tl :tablast<CR>
 map <leader>tf :tabfirst<CR>
 map <leader>tn :tabnew<CR>
 
+"Buffer navigation
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+nnoremap <leader>b :buffer 
+
 "Easy VIMRC editing
 map <leader>rc :tabedit $MYVIMRC<CR>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<CR>
+
+"Open current file location in windows explorer
+map <leader>ex :silent ! "explorer /select, %<cr>"
 
 "opening definitions
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -125,12 +128,10 @@ nnoremap Y y$
 
 " move the current line up and down
 nnoremap <leader>k      :m-2<CR>==
-nnoremap <leader>j      :m+<CR>==
-nnoremap <leader><Up>   :m-2<CR>==
-nnoremap <leader><Down> :m+<CR>==
+nnoremap <leader>j      :m+1<CR>==
 
 "Remove ^M characters visual studio likes to make
-nnoremap <leader>dm		:%s/\r\(\n\)/\1/g<CR><C-o>
+nnoremap <leader>dm		:%s/\r\(\n\)/\1/g<CR>``
 
 
 " move the word under the cursor left and right
@@ -139,7 +140,10 @@ nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+
 
 " isolate a line
 nnoremap <leader><space><space> O<c-o>j<c-o>o<c-o>k<esc>
-"
+
+"Bracket out a line
+nnoremap <leader>{ O{<esc>jo}<esc>
+
 "copy/paste to os clipboard
 vnoremap <Leader>y "*y
 nnoremap <Leader>y "*y
@@ -147,10 +151,12 @@ nnoremap <Leader>p "*p
 vnoremap <Leader>p "*p
 nnoremap <Leader>P "*P
 vnoremap <Leader>P "*P
+nnoremap <Leader>d "*d
+vnoremap <Leader>d "*d
+nnoremap <Leader>D "*D
 
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
-
 
 "Quick file type changing
 nnoremap <leader>ftj :set ft=javascript<CR>
@@ -162,8 +168,11 @@ nnoremap <leader>fts :set ft=sql<CR>
 "Break up html
 vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvato<Esc>
 
+"Format JSON
+nnoremap <Leader>fj :%!python -m json.tool<CR>
+nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
+
 "Split up HTML tag and put cursor inside
-imap <C-Enter> <Enter><Esc>O
 imap <S-Enter> <Enter><Esc>O
 
 "HTML attribute text object
@@ -180,3 +189,118 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 "let g:closetag_html_style=1
 "au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
+"For some reason I have to manually load the css color script
+au Filetype html,css source ~\.vim\vim73\after\syntax\css.vim
+
+"Ctrl-P stuff
+nnoremap <silent> <c-b> :CtrlPBuffer<CR>
+let g:ctrlp_working_path_mode = 'c'
+
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|swo|swp)$'
+
+"Gets a bunch of lines ready to be inserted into a table in sql
+nnoremap  <leader>sql :call Sql()<cr>
+
+"Generates VB public properties from private ones
+let @v = 'mmyyGpcePublic Propertyjkf_xAGet€ýc€ýbEnd Getjk>>O	Return _jk?properwye/_pjoSetEnd Setjk>>O	_" = valuejkkA(value asjk?properwwwy$/as)ea "jkjjo€kbEnd Propertyjk`mj'
+
+"Macro for splitting up sql inserts when you have over 1,000 records. Used in
+"the Sql() function
+let @s = '0xOinsert into ##SomeTable valuesjj1001j0'
+
+"Make empty lines ACTUALLY empty (no whitespace)
+nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
+"Delete empty lines
+nmap <leader>dbl :g/^$/d<cr>``
+
+"Fixes brace matching in script tags inside HTML files
+let b:match_debug=1
+
+"For vim-airline
+let g:airline#extensions#tabline#show_buffers=1
+set laststatus=2
+imap jj <esc>
+imap jk <esc>
+
+"BetterDigraphs
+inoremap <expr>  <C-K>   BDG_GetDigraph()
+
+"Vimath
+vmap ++ y:call VMATH_Analyse()<cr>
+nmap ++ vip++
+
+ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
+
+nnoremap yat yVat``
+
+"NerdTree stuff
+map <F2> :NERDTreeToggle<CR>
+map <Leader>nt :NERDTree c:/users/ian.witherow/copy/projects/webdev<CR>
+
+"Undotree
+nnoremap <F5> :UndotreeToggle<cr>
+
+function! Sql()
+	call inputsave()
+	let tableName = input('Table name: ')
+	call inputrestore() 
+
+	silent
+
+	if tableName == ""
+		echo "Aborted"
+		return
+	endif
+
+	let tableField = ""
+
+	call inputsave()
+	let createTable = input('Create table? (y/n): ')
+	call inputrestore() 
+	if createTable == "y"
+		call inputsave()
+		let tableField = input('Field name: ')
+		call inputrestore() 
+	endif
+
+	silent :execute "set filetype=sql"
+
+	"Remove blank lines
+	silent :execute ":g/^$/d"
+
+	silent :execute "%s/^/,('/g"
+	silent :execute "%s/$/')/g"
+	silent :execute "noh"
+	silent :execute "normal! gg"
+	let timeout = 5
+	let current = 0
+
+	"Command to write the insert sql statement. Go to beginning of line,
+	"delete the comma, insert new line above, write insert statement.
+	"Finally, go 1001 lines down since SQL inserts cap at 1000
+	let insertSql = 'normal 0xOinsert into ' . tableName . ' valuesjj1001j0'
+
+	silent :execute insertSql
+	let curline = line('.')
+	if curline != line('$')
+		while curline + 1 != line('$') && curline != line('$')
+			let current += 1
+			let curline = line('.')
+			if curline != line('$')
+				silent :execute insertSql
+			endif
+		endwhile
+	endif
+
+	if tableField != ""
+		:execute "normal! gg"
+		let sql = "create table " . tableName . " (". tableField ." varchar(500))"
+		:execute "normal! O"
+		call setline('.', sql)
+	endif
+
+	:execute "normal! gg"
+	normal! "*yG
+endfunction
