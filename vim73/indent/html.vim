@@ -94,6 +94,7 @@ call <SID>HtmlIndentPush('title')
 call <SID>HtmlIndentPush('tt')
 call <SID>HtmlIndentPush('u')
 call <SID>HtmlIndentPush('ul')
+call <SID>HtmlIndentPush('li')
 call <SID>HtmlIndentPush('var')
 
 
