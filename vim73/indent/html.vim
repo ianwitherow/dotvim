@@ -97,24 +97,16 @@ call <SID>HtmlIndentPush('ul')
 call <SID>HtmlIndentPush('li')
 call <SID>HtmlIndentPush('var')
 
+call <SID>HtmlIndentPush('body')
+call <SID>HtmlIndentPush('head')
+"call <SID>HtmlIndentPush('html')
+call <SID>HtmlIndentPush('tbody')
 
-" [-- <ELEMENT ? O O ...> --]
-if !exists('g:html_indent_strict')
-    call <SID>HtmlIndentPush('body')
-    call <SID>HtmlIndentPush('head')
-    call <SID>HtmlIndentPush('html')
-    call <SID>HtmlIndentPush('tbody')
-endif
-
-
-" [-- <ELEMENT ? O - ...> --]
-if !exists('g:html_indent_strict_table')
-    call <SID>HtmlIndentPush('th')
-    call <SID>HtmlIndentPush('td')
-    call <SID>HtmlIndentPush('tr')
-    call <SID>HtmlIndentPush('tfoot')
-    call <SID>HtmlIndentPush('thead')
-endif
+call <SID>HtmlIndentPush('th')
+call <SID>HtmlIndentPush('td')
+call <SID>HtmlIndentPush('tr')
+call <SID>HtmlIndentPush('tfoot')
+call <SID>HtmlIndentPush('thead')
 
 delfun <SID>HtmlIndentPush
 
@@ -242,13 +234,6 @@ fun! HtmlIndentGet(lnum)
 		return indent(lnum)
 	endif
     endif
-
-    if getline(a:lnum) =~ '\c</\?body' || getline(a:lnum) =~ '\c</\?html' || getline(a:lnum) =~ '\c</\?head'
-		return 0
-	endif
-    if getline(lnum) =~ '\c</\?body' || getline(lnum) =~ '\c</\?html' || getline(lnum) =~ '\c</\?head'
-		return 0
-	endif
 
     if getline(lnum) =~ '\c</pre>'
 	" line before the current line a:lnum contains
