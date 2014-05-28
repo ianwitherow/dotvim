@@ -18,6 +18,7 @@ set noshowmatch
 set hidden                         " Allow switching buffers even if it's not saved yet
 set guifont=consolas:h10
 
+"Syntax highlighting
 syntax on
 
 colorscheme codeschool
@@ -127,9 +128,6 @@ nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+
 " isolate a line
 nnoremap <leader><space><space> O<c-o>j<c-o>o<c-o>k<esc>
 
-"Bracket out a line
-nnoremap <leader>{ O{<esc>jo}<esc>
-
 "copy/paste to os clipboard
 vnoremap <Leader>y "*y
 nnoremap <Leader>y "*y
@@ -143,6 +141,7 @@ nnoremap <Leader>D "*D
 
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
+vnoremap P "_dP
 
 "Quick file type changing
 nnoremap <leader>ftj :set ft=javascript<CR>
@@ -158,7 +157,7 @@ vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvat
 nnoremap <Leader>fj :%!python -m json.tool<CR>
 nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
 
-"Split up HTML tag and put cursor inside
+"Split up HTML tag and put cursor inside (Used when cursor is like this: <div>|</div>)
 imap <S-Enter> <Enter><Esc>O
 
 "HTML attribute text object
