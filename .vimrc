@@ -1,18 +1,50 @@
+set number                         " Line numbers
+set linebreak                      " Break line without break word
+set nobackup                       " Dont save backup~ files
+set ignorecase                     " Ignore case when searching
+set smartcase                      " Override ignorecase when pattern contains a capital letter
+set incsearch                      " Find results as you type
+set ai                             " Autoindent
+set backspace=indent,eol,start     " Visual studio backspace thing for the extensiont
+set shiftwidth=3 tabstop=3         " Uses less real estate than 4
+set noexpandtab                    " Don't use spaces
+set guioptions-=m                  " Remove menu
+set guioptions-=T                  " Remove toolbar
+set guioptions-=r                  " Remove scroll bar
+set directory=~/.vim/swp           " Put .swp files here
+set nrformats=                     " Treat all numbers as decimal
+set lazyredraw                     " When running macros, wait until it's done and then update the screen. way fasterw
+set noshowmatch
+set hidden                         " Allow switching buffers even if it's not saved yet
+set guifont=consolas:h10
+
+syntax on
+
+colorscheme codeschool
+
 " Use pathogen to load plugins from bundle directory
 filetype off
 call pathogen#incubate()
 call pathogen#helptags()
+filetype plugin indent on
 
-set cm=blowfish
-source $VIMRUNTIME/vimrc_example.vim
+"ASP.NET files that should act like HTML
+au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
 
-"Hide GUI things
-set guioptions-=m
-set guioptions-=T
-set guioptions-=L
-set guioptions-=r
+"Start in full screen
+au GUIEnter * simalt ~x
 
-au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
+"For some reason I have to manually load the css color script
+au Filetype html,css source ~\.vim\vim73\after\syntax\css.vim
+
+"Allows % to move between braces in inline css
+au filetype html let b:match_debug=1
+
+"Fixes brace matching in script tags inside HTML files
+"let b:match_debug=1
+
+"Load .vimrc after saving it
+au! BufWritePost .vimrc source $MYVIMRC
 
 "turn off stupid bell sounds
 set noerrorbells
@@ -20,91 +52,52 @@ set novisualbell
 set t_vb=
 set tm=500
 
-set hidden "Allow switching buffers even if it's not saved yet
 
 let mapleader=','
 
-set ai "autoindent
-set tabstop=3
-set shiftwidth=3
-set noexpandtab
+"_____________________________________________________
+"----------------------Mappings-----------------------
+"_____________________________________________________
 
-set lazyredraw "When running macros, wait until it's done and then update the screen. way faster
+"jj and jk exit insert mode
+imap jj <esc>
+imap jk <esc>
 
-set nu "Show line numbers
-
-set incsearch "find results as you type
-set ignorecase "ignore case when searching
-set smartcase "override ignorecase when pattern contains a capital letter
-set noshowmatch
-
-"Start in full screen
-au GUIEnter * simalt ~x
-"map <leader>F :simalt ~x<CR>
-
-"have 0 go to first nonblank character
+"Have 0 go to first nonblank character
 nmap 0 ^
 
-set guifont=consolas:h10
-"set guifont=Segoe\ UI\ Mono:h10
-
-color codeschool
-
-"Persist undo
-
-let undo_dir = $TEMP."\\vimundo"
-if !isdirectory(undo_dir)
-	silent execute "!mkdir ".undo_dir
-endif
-set undodir=$TEMP\vimundo "not sure how to use the variable I made here
-set undofile
-set undolevels=5000
-
-runtime macros/matchit.vim
-"autocmd filetype vb set ft=vbnet "This makes vim super slow for some reason
-
-"Allows % to move between braces in inline css
-autocmd filetype html let b:match_debug=1
-
-"Treat all numbers as decimal
-set nrformats=
-
+"Space centers the screen
 nmap <space> zz
-
-"Workaround because S doesn't work with indentation in visual studio
-"nmap S ddO
-"Visual studio backspace thing for the extension
-set backspace=indent,eol,start
 
 "Double ESC turns off seach highlighting
 nmap <silent> <ESC><ESC> :noh<CR>
+
+"Ctrl-L unhighlights as well as redraws the screen
 nnoremap <silent> <c-l> :noh<cr><c-l>
 
 "New lines while staying in normal mode
 nmap <Enter> o<Esc>
 nmap <S-Enter> O<Esc>
 
-" tab navigation like firefox
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
+"Set j and k to go down a line even on a wrapped line
+nmap j gj
+nmap k gk
 
-map <leader>te :tabedit 
-map <leader>tm :tabmove 
-map <leader>tl :tablast<CR>
-map <leader>tf :tabfirst<CR>
-map <leader>tn :tabnew<CR>
+"Make empty lines ACTUALLY empty (removes lines with just whitespace)
+nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
-"Buffer navigation
-nnoremap <silent> [b :bprevious<CR>
-nnoremap <silent> ]b :bnext<CR>
-nnoremap <silent> [B :bfirst<CR>
-nnoremap <silent> ]B :blast<CR>
-nnoremap <leader>b :buffer 
+"Delete empty lines
+nmap <leader>dbl :g/^$/d<cr>``
+
+"Vimath plugin - does some math stuff on lists of numbers
+vmap ++ y:call VMATH_Analyse()<cr>
+nmap ++ vip++
+
+"Open a new tab
+nmap <leader>tn :tabnew<CR>
 
 "Easy VIMRC editing
-map <leader>rc :tabedit $MYVIMRC<CR>
+map <leader>rc :edit $MYVIMRC<CR>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<CR>
@@ -112,16 +105,9 @@ map <leader>cd :cd %:p:h<CR>
 "Open current file location in windows explorer
 map <leader>ex :silent ! "explorer /select, %<cr>"
 
-"opening definitions
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
 "Get rid of those annoying underlines in HTML
 let html_no_rendering=1
 
-"Set j and k to go down a line even on a wrapped line
-nmap j gj
-nmap k gk
 
 "Y yanks from cursor to end of line
 nnoremap Y y$
@@ -180,19 +166,24 @@ omap aha :normal vaha<CR>
 vnoremap aha :<C-U>silent! normal! vf";<CR>
 
 
-"turn off ~ file backup
-set nobackup
+"Copy the entire lines when grabbing html tags
+nnoremap yat yVat``
 
-autocmd! BufWritePost .vimrc source $MYVIMRC
+"Persist undo
+let undo_dir = $TEMP."\\vimundo"
+if !isdirectory(undo_dir)
+	silent execute "!mkdir ".undo_dir
+endif
+set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+set undofile
+set undolevels=5000
 
-"Fix closetag
-"let g:closetag_html_style=1
-"au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
-"For some reason I have to manually load the css color script
-au Filetype html,css source ~\.vim\vim73\after\syntax\css.vim
+runtime macros/matchit.vim
+
 
 "Ctrl-P stuff
+"Ctrl+B opens CtrlP Buffer
 nnoremap <silent> <c-b> :CtrlPBuffer<CR>
 let g:ctrlp_working_path_mode = 'c'
 
@@ -210,37 +201,16 @@ let @v = 'mmyyGpcePublic Propertyjkf_xAGet€ýc€ýbEnd Getjk>>O	Return _jk?proper
 "the Sql() function
 let @s = '0xOinsert into ##SomeTable valuesjj1001j0'
 
-"Make empty lines ACTUALLY empty (no whitespace)
-nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
-"Delete empty lines
-nmap <leader>dbl :g/^$/d<cr>``
-
-"Fixes brace matching in script tags inside HTML files
-let b:match_debug=1
 
 "For vim-airline
 let g:airline#extensions#tabline#show_buffers=1
 set laststatus=2
-imap jj <esc>
-imap jk <esc>
 
 "BetterDigraphs
 inoremap <expr>  <C-K>   BDG_GetDigraph()
 
-"Vimath
-vmap ++ y:call VMATH_Analyse()<cr>
-nmap ++ vip++
-
-ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
-
-nnoremap yat yVat``
-
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
-map <Leader>nt :NERDTree c:/users/ian.witherow/copy/projects/webdev<CR>
-
-"Undotree
-nnoremap <F5> :UndotreeToggle<cr>
 
 function! Sql()
 	call inputsave()
