@@ -188,7 +188,7 @@ let g:ctrlp_working_path_mode = 'c'
 
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|swo|swp)$'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|\v[\/]\.(git|hg|svn|swo|swp)$'
 
 "Gets a bunch of lines ready to be inserted into a table in sql
 nnoremap  <leader>sql :call Sql()<cr>
