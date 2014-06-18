@@ -23,11 +23,38 @@ syntax on
 
 colorscheme codeschool
 
-" Use pathogen to load plugins from bundle directory
+
+"Vundle stuff
 filetype off
-call pathogen#incubate()
-call pathogen#helptags()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'https://github.com/arecarn/crunch.git'
+Plugin 'https://github.com/kien/ctrlp.vim.git'
+Plugin 'https://github.com/chrisbra/csv.vim.git'
+Plugin 'https://github.com/Raimondi/delimitMate.git'
+Plugin 'https://github.com/vim-scripts/closetag.vim.git'
+Plugin 'https://github.com/atweiden/vim-betterdigraphs.git'
+Plugin 'https://github.com/scrooloose/nerdcommenter.git'
+Plugin 'https://github.com/mjbrownie/swapit.git'
+Plugin 'https://github.com/bling/vim-airline.git'
+Plugin 'https://github.com/tpope/vim-repeat.git'
+Plugin 'https://github.com/tpope/vim-surround.git'
+Plugin 'https://github.com/jiangmiao/auto-pairs.git'
+Plugin 'https://github.com/bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
+Plugin 'https://github.com/tmhedberg/matchit.git'
+Plugin 'https://github.com/scrooloose/nerdtree.git' "File browsing
+Plugin 'https://github.com/ervandew/supertab.git' "tab completion in insert mode
+Plugin 'https://github.com/atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
+Plugin 'https://github.com/mattn/emmet-vim.git' "New zen-coding
+call vundle#end()
 filetype plugin indent on
+
+
+"" Use pathogen to load plugins from bundle directory
+"filetype off
+"call pathogen#incubate()
+"call pathogen#helptags()
+"filetype plugin indent on
 
 "ASP.NET files that should act like HTML
 au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
@@ -36,7 +63,7 @@ au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
 au GUIEnter * simalt ~x
 
 "For some reason I have to manually load the css color script
-au Filetype html,css source ~\.vim\vim73\after\syntax\css.vim
+au Filetype html,css source ~\.vim\after\syntax\css.vim
 
 "Allows % to move between braces in inline css
 au filetype html let b:match_debug=1
