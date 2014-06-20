@@ -7,4 +7,4 @@ Installation
 Create symlink
 ==============
 	
-	ln -s ~/.vim/.vimrc ~/.vimrc
+	cd %userprofile% && mklink /H ".vimrc" ".vim\.vimrc"
