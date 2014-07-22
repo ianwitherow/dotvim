@@ -16,6 +16,7 @@ set nrformats=                     " Treat all numbers as decimal
 set lazyredraw                     " When running macros, wait until it's done and then update the screen. way fasterw
 set noshowmatch
 set hidden                         " Allow switching buffers even if it's not saved yet
+set rnu									  " relative line numbers
 set guifont=consolas:h10
 
 "Syntax highlighting
@@ -28,24 +29,35 @@ colorscheme codeschool
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'https://github.com/arecarn/crunch.git'
-Plugin 'https://github.com/kien/ctrlp.vim.git'
-Plugin 'https://github.com/chrisbra/csv.vim.git'
-Plugin 'https://github.com/Raimondi/delimitMate.git'
-Plugin 'https://github.com/docunext/closetag.vim.git'
-Plugin 'https://github.com/atweiden/vim-betterdigraphs.git'
-Plugin 'https://github.com/scrooloose/nerdcommenter.git'
-Plugin 'https://github.com/mjbrownie/swapit.git'
-Plugin 'https://github.com/bling/vim-airline.git'
-Plugin 'https://github.com/tpope/vim-repeat.git'
-Plugin 'https://github.com/tpope/vim-surround.git'
-Plugin 'https://github.com/jiangmiao/auto-pairs.git'
-Plugin 'https://github.com/bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
-Plugin 'https://github.com/tmhedberg/matchit.git'
-Plugin 'https://github.com/scrooloose/nerdtree.git' "File browsing
-Plugin 'https://github.com/ervandew/supertab.git' "tab completion in insert mode
-Plugin 'https://github.com/atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
-Plugin 'https://github.com/mattn/emmet-vim.git' "New zen-coding
+Plugin 'arecarn/crunch.git'
+Plugin 'kien/ctrlp.vim.git'
+Plugin 'chrisbra/csv.vim.git'
+Plugin 'Raimondi/delimitMate.git'
+Plugin 'docunext/closetag.vim.git'
+Plugin 'atweiden/vim-betterdigraphs.git'
+Plugin 'scrooloose/nerdcommenter.git'
+Plugin 'mjbrownie/swapit.git'
+Plugin 'bling/vim-airline.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'jiangmiao/auto-pairs.git'
+Plugin 'bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
+Plugin 'tmhedberg/matchit.git'
+Plugin 'scrooloose/nerdtree.git' "File browsing
+Plugin 'ervandew/supertab.git' "tab completion in insert mode
+Plugin 'atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
+Plugin 'mattn/emmet-vim.git' "New zen-coding
+Plugin 'godlygeek/tabular.git'
+Bundle 'tpope/vim-markdown'
+"Bundle 'pangloss/vim-javascript'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/MatchTag'
+Plugin 'kana/vim-textobj-user'
+Plugin 'tpope/vim-speeddating'
+Plugin 'dhruvasagar/vim-table-mode.git'
+Plugin 'taku-o/vim-toggle'
+Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
 
