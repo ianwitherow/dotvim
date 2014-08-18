@@ -5,6 +5,7 @@ set ignorecase                     " Ignore case when searching
 set smartcase                      " Override ignorecase when pattern contains a capital letter
 set incsearch                      " Find results as you type
 set ai                             " Autoindent
+set copyindent
 set backspace=indent,eol,start     " Visual studio backspace thing for the extensiont
 set shiftwidth=3 tabstop=3         " Uses less real estate than 4
 set noexpandtab                    " Don't use spaces
@@ -29,6 +30,7 @@ colorscheme codeschool
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
 Plugin 'arecarn/crunch.git'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'chrisbra/csv.vim.git'
@@ -55,9 +57,9 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/MatchTag'
 Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
-Plugin 'dhruvasagar/vim-table-mode.git'
+Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
-Plugin 'mattn/flappyvird-vim'
+"Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -249,6 +251,21 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
+
+
+if &term =~ "cygwin"
+	"256 color --
+	let &t_Co=256
+	" restore screen after quitting
+	set t_ti=ESC7ESC[rESC[?47h t_te=ESC[?47lESC8
+	if has("terminfo")
+		let &t_Sf="\ESC[3%p1%dm"
+		let &t_Sb="\ESC[4%p1%dm"
+	else
+	  let &t_Sf="\ESC[3%dm"
+	  let &t_Sb="\ESC[4%dm"
+	endif
+endif
 
 function! Sql()
 	call inputsave()
