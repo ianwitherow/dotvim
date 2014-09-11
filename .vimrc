@@ -59,6 +59,7 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
+Plugin 'groenewege/vim-less'
 "Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
@@ -104,6 +105,9 @@ let mapleader=','
 "jj and jk exit insert mode
 imap jj <esc>
 imap jk <esc>
+imap Jk <esc>
+imap jK <esc>
+imap JK <esc>
 
 "Have 0 go to first nonblank character
 nmap 0 ^
@@ -253,7 +257,7 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 map <F2> :NERDTreeToggle<CR>
 
 
-if &term =~ "cygwin"
+if &term =~ "cygwin" || &term =~ "win32"
 	"256 color --
 	let &t_Co=256
 	" restore screen after quitting
@@ -265,6 +269,7 @@ if &term =~ "cygwin"
 	  let &t_Sf="\ESC[3%dm"
 	  let &t_Sb="\ESC[4%dm"
 	endif
+	colorscheme badwolf
 endif
 
 function! Sql()
