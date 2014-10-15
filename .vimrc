@@ -133,7 +133,7 @@ nmap k gk
 nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
 "Delete empty lines
-nmap <leader>dbl :g/^$/d<cr>``
+nmap <leader>dbl :g/^\s*$/d<cr>``
 
 "Vimath plugin - does some math stuff on lists of numbers
 vmap ++ y:call VMATH_Analyse()<cr>
@@ -153,6 +153,9 @@ map <leader>ex :silent ! "explorer /select, %<cr>"
 
 "Get rid of those annoying underlines in HTML
 let html_no_rendering=1
+
+"Set a URL to autoversion (.net)
+map <leader>av cs"@i"<%=%>jkF=aNew AutoVersion("jkf/dt@F";Pf)a.Write()jkf@df@
 
 
 "Y yanks from cursor to end of line
@@ -271,6 +274,21 @@ if &term =~ "cygwin" || &term =~ "win32"
 	endif
 	colorscheme badwolf
 endif
+
+function! FixBrackets()
+	" Pulls up brackets that are on their own line
+	silent :g/)$\n{/normal! J
+	silent :g/)$\n\s.\{-}{/normal! J
+endfunction
+
+function! FixBracketsCss()
+	silent :g/[a-z]$\n{/normal J
+	silent :g/)$\n{/normal J
+	silent :g/[a-z]$\n\s.{-}{/normal J
+	silent :g/[a-z]$\n^\s\+{/normal J
+	silent :g/)$\n^\s\+{/normal J
+endfunction
+
 
 function! Sql()
 	call inputsave()
