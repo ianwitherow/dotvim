@@ -19,11 +19,16 @@ set noshowmatch
 set hidden                         " Allow switching buffers even if it's not saved yet
 set rnu									  " relative line numbers
 set guifont=consolas:h10
+set background=dark
+
+let mapleader=','
 
 "Syntax highlighting
 syntax on
 
-colorscheme codeschool
+
+"colorscheme solarized
+"colorscheme codeschool
 
 
 "Vundle stuff
@@ -51,7 +56,6 @@ Plugin 'atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
 Plugin 'mattn/emmet-vim.git' "New zen-coding
 Plugin 'godlygeek/tabular.git'
 Bundle 'tpope/vim-markdown'
-"Bundle 'pangloss/vim-javascript'
 Bundle 'hail2u/vim-css3-syntax'
 Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/MatchTag'
@@ -60,7 +64,10 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
 Plugin 'groenewege/vim-less'
-"Plugin 'mattn/flappyvird-vim'
+Plugin 'marcweber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 call vundle#end()
 filetype plugin indent on
 
@@ -70,6 +77,9 @@ filetype plugin indent on
 "call pathogen#incubate()
 "call pathogen#helptags()
 "filetype plugin indent on
+
+
+"Auto commands
 
 "ASP.NET files that should act like HTML
 au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
@@ -89,14 +99,13 @@ au filetype html let b:match_debug=1
 "Load .vimrc after saving it
 au! BufWritePost .vimrc source $MYVIMRC
 
+
 "turn off stupid bell sounds
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
 
-
-let mapleader=','
 
 "_____________________________________________________
 "----------------------Mappings-----------------------
@@ -134,6 +143,8 @@ nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
 "Delete empty lines
 nmap <leader>dbl :g/^\s*$/d<cr>``
+
+nmap <leader>ddbl :g/\(^\s*$\n\)\{2}/normal dd<cr>``
 
 "Vimath plugin - does some math stuff on lists of numbers
 vmap ++ y:call VMATH_Analyse()<cr>
@@ -272,23 +283,24 @@ if &term =~ "cygwin" || &term =~ "win32"
 	  let &t_Sf="\ESC[3%dm"
 	  let &t_Sb="\ESC[4%dm"
 	endif
-	colorscheme badwolf
+else
+	colorscheme solarized
 endif
 
 function! FixBrackets()
 	" Pulls up brackets that are on their own line
+	" javascript
 	silent :g/)$\n{/normal! J
 	silent :g/)$\n\s.\{-}{/normal! J
-endfunction
 
-function! FixBracketsCss()
+	"css
 	silent :g/[a-z]$\n{/normal J
 	silent :g/)$\n{/normal J
 	silent :g/[a-z]$\n\s.{-}{/normal J
 	silent :g/[a-z]$\n^\s\+{/normal J
 	silent :g/)$\n^\s\+{/normal J
-endfunction
 
+endfunction
 
 function! Sql()
 	call inputsave()
