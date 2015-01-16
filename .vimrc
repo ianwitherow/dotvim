@@ -59,7 +59,6 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
-"Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
 
