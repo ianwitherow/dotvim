@@ -29,6 +29,7 @@ colorscheme codeschool
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
 Plugin 'arecarn/crunch.git'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'chrisbra/csv.vim.git'
@@ -57,16 +58,9 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
 Plugin 'dhruvasagar/vim-table-mode.git'
 Plugin 'taku-o/vim-toggle'
-Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
 
-
-"" Use pathogen to load plugins from bundle directory
-"filetype off
-"call pathogen#incubate()
-"call pathogen#helptags()
-"filetype plugin indent on
 
 "ASP.NET files that should act like HTML
 au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
