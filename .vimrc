@@ -5,6 +5,7 @@ set ignorecase                     " Ignore case when searching
 set smartcase                      " Override ignorecase when pattern contains a capital letter
 set incsearch                      " Find results as you type
 set ai                             " Autoindent
+set copyindent
 set backspace=indent,eol,start     " Visual studio backspace thing for the extensiont
 set shiftwidth=3 tabstop=3         " Uses less real estate than 4
 set noexpandtab                    " Don't use spaces
@@ -56,8 +57,9 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/MatchTag'
 Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
-Plugin 'dhruvasagar/vim-table-mode.git'
+Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
+"Plugin 'mattn/flappyvird-vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -96,6 +98,9 @@ let mapleader=','
 "jj and jk exit insert mode
 imap jj <esc>
 imap jk <esc>
+imap Jk <esc>
+imap jK <esc>
+imap JK <esc>
 
 "Have 0 go to first nonblank character
 nmap 0 ^
@@ -121,7 +126,7 @@ nmap k gk
 nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
 "Delete empty lines
-nmap <leader>dbl :g/^$/d<cr>``
+nmap <leader>dbl :g/^\s*$/d<cr>``
 
 "Vimath plugin - does some math stuff on lists of numbers
 vmap ++ y:call VMATH_Analyse()<cr>
@@ -141,6 +146,9 @@ map <leader>ex :silent ! "explorer /select, %<cr>"
 
 "Get rid of those annoying underlines in HTML
 let html_no_rendering=1
+
+"Set a URL to autoversion (.net)
+map <leader>av cs"@i"<%=%>jkF=aNew AutoVersion("jkf/dt@F";Pf)a.Write()jkf@df@
 
 
 "Y yanks from cursor to end of line
@@ -227,7 +235,14 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|\v[\/]\.(git|hg|svn|swo
 nnoremap  <leader>sql :call Sql()<cr>
 
 "Generates VB public properties from private ones
-let @v = 'mmyyGpcePublic Propertyjkf_xAGet€ýc€ýbEnd Getjk>>O	Return _jk?properwye/_pjoSetEnd Setjk>>O	_" = valuejkkA(value asjk?properwwwy$/as)ea "jkjjo€kbEnd Propertyjk`mj'
+let @v = 'mmyyGpcePublic Propertyjkf_xA
+Get
+€ýc€ýbEnd Getjk>>O	Return _jk?proper
+wye/_
+pjoSet
+End Setjk>>O	_" = valuejkkA(value asjk?proper
+wwwy$/as)
+ea "jkjjo€kbEnd Propertyjk`mj'
 
 "Macro for splitting up sql inserts when you have over 1,000 records. Used in
 "the Sql() function
@@ -243,6 +258,37 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
+
+
+if &term =~ "cygwin" || &term =~ "win32"
+	"256 color --
+	let &t_Co=256
+	" restore screen after quitting
+	set t_ti=ESC7ESC[rESC[?47h t_te=ESC[?47lESC8
+	if has("terminfo")
+		let &t_Sf="\ESC[3%p1%dm"
+		let &t_Sb="\ESC[4%p1%dm"
+	else
+	  let &t_Sf="\ESC[3%dm"
+	  let &t_Sb="\ESC[4%dm"
+	endif
+	colorscheme badwolf
+endif
+
+function! FixBrackets()
+	" Pulls up brackets that are on their own line
+	silent :g/)$\n{/normal! J
+	silent :g/)$\n\s.\{-}{/normal! J
+endfunction
+
+function! FixBracketsCss()
+	silent :g/[a-z]$\n{/normal J
+	silent :g/)$\n{/normal J
+	silent :g/[a-z]$\n\s.{-}{/normal J
+	silent :g/[a-z]$\n^\s\+{/normal J
+	silent :g/)$\n^\s\+{/normal J
+endfunction
+
 
 function! Sql()
 	call inputsave()
