@@ -79,12 +79,6 @@ call vundle#end()
 filetype plugin indent on
 
 
-"" Use pathogen to load plugins from bundle directory
-"filetype off
-"call pathogen#incubate()
-"call pathogen#helptags()
-"filetype plugin indent on
-
 
 "Auto commands
 
