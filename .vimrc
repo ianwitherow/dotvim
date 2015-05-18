@@ -18,8 +18,7 @@ set lazyredraw                     " When running macros, wait until it's done a
 set noshowmatch
 set hidden                         " Allow switching buffers even if it's not saved yet
 set rnu									  " relative line numbers
-set guifont=consolas:h10
-set background=dark
+set guifont=Ubuntu\ Mono:h11
 
 let mapleader=','
 
@@ -29,19 +28,21 @@ syntax on
 
 "colorscheme solarized
 "colorscheme codeschool
+colorscheme molokai
 
 
 "Vundle stuff
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
 Plugin 'gmarik/Vundle.vim'
-Plugin 'arecarn/crunch.git'
+"Plugin 'arecarn/crunch.git'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'chrisbra/csv.vim.git'
 Plugin 'Raimondi/delimitMate.git'
 Plugin 'docunext/closetag.vim.git'
-Plugin 'atweiden/vim-betterdigraphs.git'
+"Plugin 'atweiden/vim-betterdigraphs.git'
 Plugin 'scrooloose/nerdcommenter.git'
 Plugin 'mjbrownie/swapit.git'
 Plugin 'bling/vim-airline.git'
@@ -51,23 +52,29 @@ Plugin 'jiangmiao/auto-pairs.git'
 Plugin 'bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
 Plugin 'tmhedberg/matchit.git'
 Plugin 'scrooloose/nerdtree.git' "File browsing
-Plugin 'ervandew/supertab.git' "tab completion in insert mode
-Plugin 'atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
+"Plugin 'ervandew/supertab.git' "tab completion in insert mode
+Plugin 'atweiden/vim-vmath.git' "Lets you do <leader>+ to math some numbers
 Plugin 'mattn/emmet-vim.git' "New zen-coding
 Plugin 'godlygeek/tabular.git'
-Bundle 'tpope/vim-markdown'
+"Bundle 'tpope/vim-markdown'
 Bundle 'hail2u/vim-css3-syntax'
-Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/MatchTag'
-Plugin 'kana/vim-textobj-user'
-Plugin 'tpope/vim-speeddating'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'taku-o/vim-toggle'
+"Plugin 'kana/vim-textobj-user'
+"Plugin 'tpope/vim-speeddating'
+"Plugin 'dhruvasagar/vim-table-mode'
+"Plugin 'taku-o/vim-toggle'
 Plugin 'groenewege/vim-less'
 Plugin 'marcweber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'terryma/vim-expand-region'
+Plugin 'powerline/powerline'
+Plugin 'AndrewRadev/sideways.vim' "Move function arguments left or right with Crtl+H and Crtl+L
+"Plugin 'vim-scripts/Toggle'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -111,13 +118,6 @@ set tm=500
 "----------------------Mappings-----------------------
 "_____________________________________________________
 
-"jj and jk exit insert mode
-imap jj <esc>
-imap jk <esc>
-imap Jk <esc>
-imap jK <esc>
-imap JK <esc>
-
 "Have 0 go to first nonblank character
 nmap 0 ^
 
@@ -147,8 +147,8 @@ nmap <leader>dbl :g/^\s*$/d<cr>``
 nmap <leader>ddbl :g/\(^\s*$\n\)\{2}/normal dd<cr>``
 
 "Vimath plugin - does some math stuff on lists of numbers
-vmap ++ y:call VMATH_Analyse()<cr>
-nmap ++ vip++
+vmap <leader>+ y:call VMATH_Analyse()<cr>
+nmap <leader>+ vip++
 
 "Open a new tab
 nmap <leader>tn :tabnew<CR>
@@ -166,7 +166,7 @@ map <leader>ex :silent ! "explorer /select, %<cr>"
 let html_no_rendering=1
 
 "Set a URL to autoversion (.net)
-map <leader>av cs"@i"<%=%>jkF=aNew AutoVersion("jkf/dt@F";Pf)a.Write()jkf@df@
+map <leader>av cs"@i"<%=%><esc>F=aNew AutoVersion("<esc>f/dt@F";Pf)a.Write()<esc>f@df@
 
 
 "Y yanks from cursor to end of line
@@ -212,8 +212,10 @@ nnoremap <leader>fts :set ft=sql<CR>
 "Break up html
 vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvato<Esc>
 
-"Format JSON
+"Format JSON and JS
 nnoremap <Leader>fj :%!python -m json.tool<CR>
+nnoremap <Leader>fjs :call JsBeautify()<cr>
+
 nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
 
 "Split up HTML tag and put cursor inside (Used when cursor is like this: <div>|</div>)
@@ -223,9 +225,25 @@ imap <S-Enter> <Enter><Esc>O
 omap aha :normal vaha<CR>
 vnoremap aha :<C-U>silent! normal! vf";<CR>
 
-
 "Copy the entire lines when grabbing html tags
 nnoremap yat yVat``
+
+"Sideways.vim - move parameters inside a method left or right
+nnoremap <c-h> :SidewaysLeft<cr>
+nnoremap <c-l> :SidewaysRight<cr>
+"Create 'argument' text object - a
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+
+"UndoTree
+nnoremap <F5> :UndotreeToggle<cr>
+
+"_____________________________________________________
+"----------------------End of Mappings-----------------------
+"_____________________________________________________
+
 
 "Persist undo
 let undo_dir = $TEMP."\\vimundo"
@@ -253,11 +271,11 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|\v[\/]\.(git|hg|svn|swo
 nnoremap  <leader>sql :call Sql()<cr>
 
 "Generates VB public properties from private ones
-let @v = 'mmyyGpcePublic Propertyjkf_xAGet€ýc€ýbEnd Getjk>>O	Return _jk?properwye/_pjoSetEnd Setjk>>O	_" = valuejkkA(value asjk?properwwwy$/as)ea "jkjjo€kbEnd Propertyjk`mj'
+let @v = 'mmyyGpcePublic Propertyf_xAGet€ýc€ýbEnd Get>>O	Return _?properwye/_pjoSetEnd Set>>O	_" = valuekA(value as?properwwwy$/as)ea "jjo€kbEnd Property`mj'
 
 "Macro for splitting up sql inserts when you have over 1,000 records. Used in
 "the Sql() function
-let @s = '0xOinsert into ##SomeTable valuesjj1001j0'
+let @s = '0xOinsert into ##SomeTable values1001j0'
 
 
 "For vim-airline
@@ -273,6 +291,7 @@ map <F2> :NERDTreeToggle<CR>
 
 if &term =~ "cygwin" || &term =~ "win32"
 	"256 color --
+	let g:rehash256 = 1
 	let &t_Co=256
 	" restore screen after quitting
 	set t_ti=ESC7ESC[rESC[?47h t_te=ESC[?47lESC8
@@ -280,11 +299,13 @@ if &term =~ "cygwin" || &term =~ "win32"
 		let &t_Sf="\ESC[3%p1%dm"
 		let &t_Sb="\ESC[4%p1%dm"
 	else
+		let g:rehash256 = 0
 	  let &t_Sf="\ESC[3%dm"
 	  let &t_Sb="\ESC[4%dm"
 	endif
 else
-	colorscheme solarized
+	"colorscheme solarized
+	"colorscheme flattown
 endif
 
 function! FixBrackets()
@@ -340,7 +361,7 @@ function! Sql()
 	"Command to write the insert sql statement. Go to beginning of line,
 	"delete the comma, insert new line above, write insert statement.
 	"Finally, go 1001 lines down since SQL inserts cap at 1000
-	let insertSql = 'normal 0xOinsert into ' . tableName . ' valuesjj1001j0'
+	let insertSql = 'normal 0xOinsert into ' . tableName . ' values1001j0'
 
 	silent :execute insertSql
 	let curline = line('.')
