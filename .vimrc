@@ -1,5 +1,6 @@
 set number                         " Line numbers
 set linebreak                      " Break line without break word
+set linespace=4
 set nobackup                       " Dont save backup~ files
 set ignorecase                     " Ignore case when searching
 set smartcase                      " Override ignorecase when pattern contains a capital letter
@@ -18,7 +19,9 @@ set lazyredraw                     " When running macros, wait until it's done a
 set noshowmatch
 set hidden                         " Allow switching buffers even if it's not saved yet
 set rnu									  " relative line numbers
-set guifont=Ubuntu\ Mono:h11
+set guifont=Ubuntu\ Mono:h12
+"set guifont=Fira\ Code:h10
+
 
 let mapleader=','
 
@@ -36,6 +39,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gmarik/Vundle.vim'
 "Plugin 'arecarn/crunch.git'
 Plugin 'kien/ctrlp.vim.git'
@@ -62,7 +66,7 @@ Bundle 'hail2u/vim-css3-syntax'
 Bundle 'gregsexton/MatchTag'
 "Plugin 'kana/vim-textobj-user'
 "Plugin 'tpope/vim-speeddating'
-"Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'dhruvasagar/vim-table-mode'
 "Plugin 'taku-o/vim-toggle'
 Plugin 'groenewege/vim-less'
 Plugin 'marcweber/vim-addon-mw-utils'
@@ -73,11 +77,17 @@ Plugin 'maksimr/vim-jsbeautify'
 Plugin 'terryma/vim-expand-region'
 Plugin 'powerline/powerline'
 Plugin 'AndrewRadev/sideways.vim' "Move function arguments left or right with Crtl+H and Crtl+L
-"Plugin 'vim-scripts/Toggle'
+Plugin 'mbbill/undotree'
 
 call vundle#end()
 filetype plugin indent on
 
+
+"" Use pathogen to load plugins from bundle directory
+"filetype off
+"call pathogen#incubate()
+"call pathogen#helptags()
+"filetype plugin indent on
 
 
 "Auto commands
@@ -162,6 +172,8 @@ let html_no_rendering=1
 "Set a URL to autoversion (.net)
 map <leader>av cs"@i"<%=%><esc>F=aNew AutoVersion("<esc>f/dt@F";Pf)a.Write()<esc>f@df@
 
+"Tableify the document (using tab as the delimiter), then copy it to clipboard
+map <leader>tt :%Tableize/\t<cr>ggyyppVr-gg.yyGpgg"*yG
 
 "Y yanks from cursor to end of line
 nnoremap Y y$
