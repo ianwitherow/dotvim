@@ -10,7 +10,7 @@ set copyindent
 set backspace=indent,eol,start " Visual studio backspace thing for the extensiont
 set shiftwidth=3 tabstop=3     " Uses less real estate than 4
 set noexpandtab                " Don't use spaces
-set guioptions-=m              " Remove menu
+"set guioptions-=m              " Remove menu
 set guioptions-=T              " Remove toolbar
 set guioptions-=r              " Remove scroll bar
 set directory=~/.vim/swp       " Put .swp files here
@@ -21,7 +21,11 @@ set hidden                     " Allow switching buffers even if it's not saved 
 set rnu                        " relative line numbers
 set nohlsearch                 " Don't highlight search queries
 
-set guifont=Monaco\ for\ Powerline:h10:cANSI
+set guifont=Monaco\ for\ Powerline:h11:cANSI
+"set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h13
+"set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h13
+"set guifont=SauceCodePro\ Nerd\ Font:h13
+
 
 let mapleader=','
 
@@ -37,33 +41,53 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'chrisbra/csv.vim.git'
-Plugin 'Raimondi/delimitMate.git'
+"Plugin 'Raimondi/delimitMate.git'
+Plugin 'jiangmiao/auto-pairs.git'
+Plugin 'cohama/lexima.vim'
 Plugin 'docunext/closetag.vim.git'
 Plugin 'scrooloose/nerdcommenter.git'
 Plugin 'mjbrownie/swapit.git'
 Plugin 'bling/vim-airline.git'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-repeat.git'
 Plugin 'tpope/vim-surround.git'
-Plugin 'jiangmiao/auto-pairs.git'
-Plugin 'bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
-Plugin 'tmhedberg/matchit.git'
-Plugin 'scrooloose/nerdtree.git' "File browsing
-Plugin 'atweiden/vim-vmath.git' "Lets you do <leader>+ to math some numbers
-Plugin 'mattn/emmet-vim.git' "New zen-coding
+Plugin 'bkad/CamelCaseMotion.git'         " use ,<motion> to move in camelcase
+Bundle 'gregsexton/MatchTag'
+Plugin 'scrooloose/nerdtree.git'          " File browsing
+Plugin 'ianwitherow/vim-vmath'            " Lets you do <leader>+ to math some numbers
+Plugin 'mattn/emmet-vim.git'              " New zen-coding
 Plugin 'godlygeek/tabular.git'
 Bundle 'tpope/vim-markdown'
 Bundle 'hail2u/vim-css3-syntax'
-Bundle 'gregsexton/MatchTag'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'groenewege/vim-less'
-Plugin 'morhetz/gruvbox' "colorscheme
 Plugin 'mbbill/undotree'
+Plugin 'AndrewRadev/sideways.vim'
+Plugin 'othree/yajs.vim'                  " javascript, es6/react stuff
+Plugin 'mxw/vim-jsx'                      " React syntax
+Plugin 'othree/es.next.syntax.vim'        " es7 syntax
+Plugin 'tommcdo/vim-lion'                 " align code with gl<motion><letter>, like glip=
+Plugin 'PProvost/vim-ps1'                 " Powershell support
 
-"Bundle "daylerees/colour-schemes", { "rtp": "vim/" }
+Plugin 'morhetz/gruvbox'                  " colorscheme
+Plugin 'mhartington/oceanic-next'         " colorscheme
+Plugin 'dracula/vim'                      " colorscheme
+Plugin 'sickill/vim-monokai'              " colorscheme
+Plugin 'kkoenig/wimproved.vim'            " Fixes gvim issues like window bar color
+Plugin 'yegappan/mru'                     " Plugin for recently edited files
+
+Plugin 'MarcWeber/vim-addon-mw-utils'     " Dependency for snipmate
+Plugin 'tomtom/tlib_vim'                  " Dependency for snipmate
+Plugin 'garbas/vim-snipmate'              " Snippets
+
+Plugin 'honza/vim-snippets'
 
 call vundle#end()
 
-colorscheme gruvbox
+"colorscheme gruvbox
+"colorscheme OceanicNext
+"colorscheme monokai
+colorscheme dracula
 
 filetype plugin indent on
 
@@ -82,6 +106,8 @@ au BufNewFile,BufRead *.aspx,*.ascx,*.master,*.cshtml set filetype=html
 
 "Start in full screen
 au GUIEnter * simalt ~x
+au GUIEnter * silent! WToggleClean
+
 
 "For some reason I have to manually load the css color script
 au Filetype html,css source ~\.vim\after\syntax\css.vim
@@ -157,8 +183,6 @@ map <leader>ex :silent ! "explorer /select, %<cr>"
 map <leader>chr :silent !"chrome %<cr>"
 
 
-"Get rid of those annoying underlines in HTML
-let html_no_rendering=1
 
 "Set a URL to autoversion (.net)
 map <leader>av cs"@i"<%=%><esc>F=aNew AutoVersion("<esc>f/dt@F";Pf)a.Write()<esc>f@df@
@@ -195,12 +219,16 @@ nnoremap <Leader>D "*D
 vnoremap p "_dp
 vnoremap P "_dP
 
+"Search for visually selected text
+vnoremap // y/<C-R>"<CR>
+
 "Quick file type changing
 nnoremap <leader>ftj :set ft=javascript<CR>
 nnoremap <leader>fth :set ft=html<CR>
 nnoremap <leader>ftc :set ft=css<CR>
 nnoremap <leader>ftx :set ft=xml<CR>
 nnoremap <leader>fts :set ft=sql<CR>
+nnoremap <leader>ftv :set ft=vbnet<CR>
 
 "Break up html
 vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvato<Esc>
@@ -209,7 +237,7 @@ vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvat
 nnoremap <Leader>fj :%!python -m json.tool<CR>
 nnoremap <Leader>fjs :call JsBeautify()<cr>
 
-nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
+nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^\s*$/d<CR>gg=G
 
 "Fix js comments. Turns //This  into  // This
 "Make sure a colon isn't before the slashes since that's probably a url
@@ -243,9 +271,22 @@ nnoremap <F5> :UndotreeToggle<cr>
 "Markdown preview
 nmap <leader>md :%!c:\users\ian.witherow\.vim\Markdown.pl --html4tags <cr>
 
+" Use tab and shift-tab to cycle through windows.
+nnoremap <Tab> <C-W>w
+nnoremap <S-Tab> <C-W>W
+"
+" Use | and _ to split windows (while preserving original behaviour of [count]bar and [count]_).
+nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
+nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
+
 "_____________________________________________________
 "----------------------End of Mappings-----------------------
 "_____________________________________________________
+
+"Get rid of those annoying underlines in HTML
+let html_no_rendering=1
+"use jsx settings for .js files also
+let g:jsx_ext_required = 0
 
 
 "Persist undo
@@ -274,7 +315,14 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|\v[\/]\.(git|hg|svn|swo
 nnoremap  <leader>sql :call Sql()<cr>
 
 "Generates VB public properties from private ones
-let @v = 'mmyyGpcePublic Propertyf_xAGet€ýc€ýbEnd Get>>O	Return _?properwye/_pjoSetEnd Set>>O	_" = valuekA(value as?properwwwy$/as)ea "jjo€kbEnd Property`mj'
+let @v = 'mmyyGpcePublic Propertyf_xA
+Get
+Â€Ã½cÂ€Ã½bEnd Get>>O	Return _?proper
+wye/_
+pjoSet
+End Set>>O	_" = valuekA(value as?proper
+wwwy$/as)
+ea "jjoÂ€kbEnd Property`mj'
 
 "Macro for splitting up sql inserts when you have over 1,000 records. Used in
 "the Sql() function
@@ -290,15 +338,22 @@ set encoding=utf-8 " Necessary to show Unicode glyphs
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
-let g:airline_theme='solarized'
+"let g:airline_theme='solarized'
 
 "BetterDigraphs
 inoremap <expr>  <C-K>   BDG_GetDigraph()
 
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
+"Make it so ? doesn't open help
+let NERDTreeMapHelp='<F7>'
 
-if &term =~ "cygwin" || &term =~ "win32"
+if !has("gui_running")
+    set term=xterm
+    set t_Co=256
+    let &t_AB="\e[48;5;%dm"
+    let &t_AF="\e[38;5;%dm"
+    colorscheme zenburn
 endif
 
 
@@ -400,7 +455,7 @@ function! FormatSchedule()
 	"remove blank days (lines with just a number and a blank line beneath)
 	silent :execute "%s/^\\d\\+$\\n\\n//g"
 	"Remove lines with just her name
-	silent :execute ":g/Brianna Witherow/d"
+	silent :execute ":g/\\(Brianna Witherow\\)\\|\\(Vital Outdoors\\)/d"
 	"Remove blank lines
 	:execute ":g/^\s*$/d"
 	"Go to top of file
@@ -426,3 +481,46 @@ function! FormatSchedule()
 	:execute "normal! gg"
 
 endfunction
+
+function! FixBMIHtml()
+	silent :execute "%s/\\(<[A-Z].\\{-}>\\|<\\/[A-Z].\\{-}>\\)/\\L&/ge"
+	silent :execute "%s/</\\r</ge"
+	silent :execute "%s/>/>\\r/ge"
+	silent :execute "g/^\\s*$/d"
+	silent :execute "set filetype=html"
+
+endfunction
+
+function! FindDuplicates()
+	call setreg("d", "")
+	let lineCounts = {}
+	let lineNum = 0
+	let dupsCount = 0
+	while lineNum <= line('$')
+		let lineText = getline(lineNum)
+		if lineText != ""
+			let lineCounts[lineText] = (has_key(lineCounts, lineText) ? lineCounts[lineText] : 0) + 1
+		endif
+		let lineNum = lineNum + 1
+	endwhile
+	exe 'syn clear Repeat'
+	for lineText in keys(lineCounts)
+		if lineCounts[lineText] >= 2
+			let dupsCount = dupsCount + 1
+			call setreg("D", lineText."\n")   " Duplicate     --> register d
+			exe 'syn match Repeat "^' . escape(lineText, '".\^$*[]') . '$"'
+		endif
+	endfor
+	if dupsCount > 0
+		highlight NormalUnderlined term=underline cterm=underline gui=underline
+		echo "Found ".dupsCount." duplicate lines. They're in register "
+		echohl NormalUnderlined
+		echon "d"
+		echohl NONE
+	else
+		echo "No duplicate lines found."
+	endif
+endfunction
+
+
+
